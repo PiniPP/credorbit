@@ -37,12 +37,12 @@ func (e *env) bar(w int, frac float64) string {
 }
 
 type progressPanel struct {
-	step              string // only events of this step count ("" = all)
-	done, total       int
-	ok, fail          int
-	recent            []model.Event
-	message           string
-	running, finished bool
+	step        string // only events of this step count ("" = all)
+	done, total int
+	ok, fail    int
+	recent      []model.Event
+	message     string
+	running     bool
 }
 
 func (p *progressPanel) reset(step string) { *p = progressPanel{step: step, running: true} }

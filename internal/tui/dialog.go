@@ -254,11 +254,11 @@ type formDialog struct {
 	fields []*field
 	focus  int
 	err    string
-	submit func(vals []string) (error, tea.Cmd)
+	submit func(vals []string) (tea.Cmd, error)
 	cancel func() tea.Cmd
 }
 
-func newForm(e *env, title, intro string, fields []*field, submit func([]string) (error, tea.Cmd)) *formDialog {
+func newForm(e *env, title, intro string, fields []*field, submit func([]string) (tea.Cmd, error)) *formDialog {
 	return &formDialog{e: e, title: title, intro: intro, fields: fields, submit: submit}
 }
 
@@ -284,7 +284,7 @@ func (d *formDialog) Update(k tea.KeyMsg) (bool, tea.Cmd) {
 		for i, f := range d.fields {
 			vals[i] = f.Value()
 		}
-		err, cmd := d.submit(vals)
+		cmd, err := d.submit(vals)
 		if err != nil {
 			d.err = err.Error()
 			return false, cmd

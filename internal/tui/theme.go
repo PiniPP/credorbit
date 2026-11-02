@@ -43,8 +43,6 @@ type theme struct {
 	bgSeq, surfaceSeq string
 }
 
-func themeNames() []string { return []string{"default", "light", "mono"} }
-
 // newTheme builds a theme on renderer r. Unknown names fall back to default.
 func newTheme(name string, r *lipgloss.Renderer) *theme {
 	t := &theme{name: name, r: r}

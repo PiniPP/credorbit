@@ -103,7 +103,7 @@ func (s *Service) targets(scope engine.Scope) []*acct {
 		case engine.ScopeGroup:
 			g := s.groups[scope.Group]
 			if g == nil || !contains(g.ids, a.ID) {
-				if !(scope.IncludeNew && a.status == model.StatusNew) {
+				if !scope.IncludeNew || a.status != model.StatusNew {
 					continue
 				}
 			}

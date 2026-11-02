@@ -70,7 +70,6 @@ func (w *wizard) loadSessions() {
 
 func (w *wizard) Init() tea.Cmd { return nil }
 func (w *wizard) Title() string { return "Full Setup & Sync" }
-func (w *wizard) busy() bool    { return w.opID != 0 }
 
 func (w *wizard) KeyHints() []hint {
 	g := w.e.g
@@ -214,20 +213,20 @@ func (w *wizard) newSessionForm() tea.Cmd {
 	f := []*field{newField("Name", "e.g. my-org", ""), newField("Start URL", "https://my-org.awsapps.com/start", ""), newField("Region", "us-east-1", "us-east-1")}
 	return openDialog(newForm(e, "Configure new SSO session",
 		"Adds an [sso-session] block to ~/.aws/config (you will be asked to approve the write).", f,
-		func(v []string) (error, tea.Cmd) {
+		func(v []string) (tea.Cmd, error) {
 			if v[0] == "" || strings.ContainsAny(v[0], " []") {
-				return errors.New("name is required and may not contain spaces or brackets"), nil
+				return nil, errors.New("name is required and may not contain spaces or brackets")
 			}
 			if !strings.HasPrefix(v[1], "https://") {
-				return errors.New("start URL must begin with https://"), nil
+				return nil, errors.New("start URL must begin with https://")
 			}
 			if v[2] == "" {
-				return errors.New("region is required"), nil
+				return nil, errors.New("region is required")
 			}
 			sess := model.SSOSession{Name: v[0], StartURL: v[1], Region: v[2]}
 			id, cmd := e.run("Adding session", func(context.Context) (any, error) { return nil, e.svc.AddSession(sess) })
 			w.opID = id
-			return nil, cmd
+			return cmd, nil
 		}))
 }
 

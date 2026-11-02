@@ -137,16 +137,15 @@ func newTestAuth(t *testing.T) (*Authenticator, *fakeOIDC, *clock) {
 // replays a forged callback (wrong state) which must be rejected, then the
 // genuine one.
 type browser struct {
-	t         *testing.T
-	code      string
-	errParam  string
-	wg        sync.WaitGroup
-	mu        sync.Mutex
-	authURL   *url.URL
-	forged    int
-	genuine   int
-	genuineOK bool
-	page      string
+	t        *testing.T
+	code     string
+	errParam string
+	wg       sync.WaitGroup
+	mu       sync.Mutex
+	authURL  *url.URL
+	forged   int
+	genuine  int
+	page     string
 }
 
 func (b *browser) open(raw string) error {

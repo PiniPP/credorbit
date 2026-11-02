@@ -427,11 +427,11 @@ func (s *settingsScreen) Update(msg tea.Msg) tea.Cmd {
 			}))
 		}
 		f := newField("Value", "", st.Value)
-		return openDialog(newForm(e, st.Key, st.Description, []*field{f}, func(v []string) (error, tea.Cmd) {
+		return openDialog(newForm(e, st.Key, st.Description, []*field{f}, func(v []string) (tea.Cmd, error) {
 			if err := s.set(st.Key, v[0]); err != nil {
-				return err, nil
+				return nil, err
 			}
-			return nil, after()
+			return after(), nil
 		}))
 	}
 	return nil

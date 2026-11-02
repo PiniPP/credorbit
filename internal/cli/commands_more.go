@@ -58,7 +58,7 @@ func (a *app) groupsCmd() *cobra.Command {
 	})}
 	edit := &cobra.Command{Use: "edit NAME", Short: "Edit a group interactively (TUI)", Args: exactArgs(1), RunE: withSvc(func(svc engine.Service, args []string) error {
 		if !a.tty || RunUI == nil {
-			return fmt.Errorf("groups edit needs an interactive terminal with the TUI; use: credorbit groups add|remove %s KEY...", args[0])
+			return fmt.Errorf("groups edit needs an interactive terminal with the TUI; use: credorbit groups add|remove %s KEY", args[0])
 		}
 		if _, err := svc.Group(args[0]); err != nil {
 			return err

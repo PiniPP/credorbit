@@ -402,15 +402,15 @@ func (s *groupsScreen) Update(msg tea.Msg) tea.Cmd {
 		case "c":
 			f := []*field{newField("Name", "e.g. payments", ""), newField("Description", "optional", "")}
 			return openDialog(newForm(e, "Create group", "Groups are saved selections of accounts; they never change AWS files.", f,
-				func(v []string) (error, tea.Cmd) {
+				func(v []string) (tea.Cmd, error) {
 					if v[0] == "" {
-						return errors.New("a name is required"), nil
+						return nil, errors.New("a name is required")
 					}
 					if err := e.svc.CreateGroup(v[0], v[1]); err != nil {
-						return err, nil
+						return nil, err
 					}
 					s.reload()
-					return nil, toast("created group " + v[0])
+					return toast("created group " + v[0]), nil
 				}))
 		case "r":
 			if len(s.groups) == 0 {
@@ -421,12 +421,12 @@ func (s *groupsScreen) Update(msg tea.Msg) tea.Cmd {
 				return toast("the main group cannot be renamed")
 			}
 			f := []*field{newField("New name", "", old)}
-			return openDialog(newForm(e, "Rename "+old, "", f, func(v []string) (error, tea.Cmd) {
+			return openDialog(newForm(e, "Rename "+old, "", f, func(v []string) (tea.Cmd, error) {
 				if err := e.svc.RenameGroup(old, v[0]); err != nil {
-					return err, nil
+					return nil, err
 				}
 				s.reload()
-				return nil, toast("renamed " + old + " " + e.g.right + " " + v[0])
+				return toast("renamed " + old + " " + e.g.right + " " + v[0]), nil
 			}))
 		case "d":
 			if len(s.groups) == 0 {
