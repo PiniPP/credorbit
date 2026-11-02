@@ -13,9 +13,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	"github.com/credorbit/credorbit/internal/engine"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/netx"
+	"github.com/PiniPP/credorbit/internal/engine"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/netx"
 )
 
 var accountIDRE = regexp.MustCompile(`^\d{12}$`)

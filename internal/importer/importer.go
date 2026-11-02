@@ -14,8 +14,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 // ErrNotLegacyScript is returned when the input has none of the recognised

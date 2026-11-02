@@ -16,10 +16,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/netx"
-	"github.com/credorbit/credorbit/internal/paths"
-	"github.com/credorbit/credorbit/internal/sso"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/netx"
+	"github.com/PiniPP/credorbit/internal/paths"
+	"github.com/PiniPP/credorbit/internal/sso"
 )
 
 // Synthetic fixture: two sessions, ~20 profiles, unrelated hand-written ones.

@@ -3,7 +3,7 @@
 #
 #   packaging/render-manifests.sh <version-without-v> <checksums.txt> [outdir]
 #
-# CREDORBIT_REPO selects the GitHub repository (default credorbit/credorbit).
+# CREDORBIT_REPO selects the GitHub repository (default PiniPP/credorbit).
 # GoReleaser already publishes a scoop manifest when a bucket token is set;
 # these templates are for manual submission (e.g. winget-pkgs pull requests).
 set -eu
@@ -12,7 +12,7 @@ set -eu
 VERSION="${1#v}"
 SUMS="$2"
 OUT="${3:-dist/manifests}"
-REPO="${CREDORBIT_REPO:-credorbit/credorbit}"
+REPO="${CREDORBIT_REPO:-PiniPP/credorbit}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 
 sum_for() {

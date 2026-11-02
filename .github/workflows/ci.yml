@@ -81,7 +81,7 @@ jobs:
       - name: go build
         run: |
           go build -trimpath \
-            -ldflags "-s -w -X github.com/credorbit/credorbit/internal/version.Version=ci-${GITHUB_SHA::7} -X github.com/credorbit/credorbit/internal/version.Commit=${GITHUB_SHA::12}" \
+            -ldflags "-s -w -X github.com/PiniPP/credorbit/internal/version.Version=ci-${GITHUB_SHA::7} -X github.com/PiniPP/credorbit/internal/version.Commit=${GITHUB_SHA::12}" \
             -o "dist/credorbit-${GOOS}-${GOARCH}" ./cmd/credorbit
 
   govulncheck:

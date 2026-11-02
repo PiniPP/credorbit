@@ -9,9 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/credorbit/credorbit/internal/awsini"
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/awsini"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 const baseConfig = `# my hand-written notes

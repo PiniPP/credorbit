@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // ScopeKind selects which accounts/profiles an operation covers.

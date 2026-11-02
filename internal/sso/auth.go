@@ -24,8 +24,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ssooidc"
 	"github.com/aws/smithy-go"
 
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // Flow selects the OIDC login flow.

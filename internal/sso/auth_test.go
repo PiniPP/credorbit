@@ -24,7 +24,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ssooidc/types"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // fakeOIDC is an in-memory SSO OIDC service.

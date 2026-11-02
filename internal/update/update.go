@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/fsutil"
 )
 
 // Defaults.

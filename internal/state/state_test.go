@@ -12,7 +12,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 func TestDefaultIsValid(t *testing.T) {

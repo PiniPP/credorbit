@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // Group is a named set of accounts (e.g. "main" for fast exports).

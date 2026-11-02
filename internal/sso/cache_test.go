@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 const testStartURL = "https://d-1234567890.awsapps.com/start"

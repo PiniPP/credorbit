@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/profilesync"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/profilesync"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 // cachedRemovalMsg explains why removals are not evaluated on a cached discovery.

@@ -14,10 +14,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/engine"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/netx"
-	"github.com/credorbit/credorbit/internal/sso"
+	"github.com/PiniPP/credorbit/internal/engine"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/netx"
+	"github.com/PiniPP/credorbit/internal/sso"
 )
 
 const (

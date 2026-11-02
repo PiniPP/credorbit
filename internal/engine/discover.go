@@ -7,11 +7,11 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/credorbit/credorbit/internal/credexport"
-	"github.com/credorbit/credorbit/internal/inventory"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/sso"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/credexport"
+	"github.com/PiniPP/credorbit/internal/inventory"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/sso"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 // Discover runs a live discovery. Only a complete discovery replaces the

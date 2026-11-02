@@ -15,8 +15,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/roles"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/roles"
 )
 
 // Target is one profile to export and the credentials section it goes to.

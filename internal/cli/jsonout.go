@@ -3,7 +3,7 @@ package cli
 import (
 	"time"
 
-	"github.com/credorbit/credorbit/internal/engine"
+	"github.com/PiniPP/credorbit/internal/engine"
 )
 
 // Stable JSON shapes of CLI output. They never contain secrets.

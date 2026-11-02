@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // UnmatchedWeight is the weight of a role no rule matches.

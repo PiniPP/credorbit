@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // DefaultThreshold is the minimum ratio discovered/configured accounts below

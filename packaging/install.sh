@@ -4,7 +4,7 @@
 #   curl -fsSL https://raw.githubusercontent.com/<owner>/<repo>/main/packaging/install.sh | sh
 #
 # Environment:
-#   CREDORBIT_REPO      GitHub repository (default: credorbit/credorbit)
+#   CREDORBIT_REPO      GitHub repository (default: PiniPP/credorbit)
 #   CREDORBIT_VERSION   tag to install, e.g. v1.2.3 (default: latest release)
 #   CREDORBIT_INSTALL   install directory (default: ~/.local/bin)
 #   GITHUB_TOKEN        optional, raises GitHub API rate limits
@@ -13,7 +13,7 @@
 # Nothing is installed with sudo; choose a writable CREDORBIT_INSTALL instead.
 set -eu
 
-REPO="${CREDORBIT_REPO:-credorbit/credorbit}"
+REPO="${CREDORBIT_REPO:-PiniPP/credorbit}"
 VERSION="${CREDORBIT_VERSION:-}"
 INSTALL_DIR="${CREDORBIT_INSTALL:-$HOME/.local/bin}"
 BINARY="credorbit"

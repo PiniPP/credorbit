@@ -14,15 +14,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/awsini"
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/netx"
-	"github.com/credorbit/credorbit/internal/paths"
-	"github.com/credorbit/credorbit/internal/redact"
-	"github.com/credorbit/credorbit/internal/roles"
-	"github.com/credorbit/credorbit/internal/sso"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/awsini"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/netx"
+	"github.com/PiniPP/credorbit/internal/paths"
+	"github.com/PiniPP/credorbit/internal/redact"
+	"github.com/PiniPP/credorbit/internal/roles"
+	"github.com/PiniPP/credorbit/internal/sso"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 var _ Service = (*Engine)(nil)

@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/importer"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/importer"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 type setting struct {

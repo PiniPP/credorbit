@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 // accountIndex maps profile names and discovered accounts for group resolution.

@@ -7,12 +7,12 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/awsini"
-	"github.com/credorbit/credorbit/internal/credexport"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/profilesync"
-	"github.com/credorbit/credorbit/internal/roles"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/awsini"
+	"github.com/PiniPP/credorbit/internal/credexport"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/profilesync"
+	"github.com/PiniPP/credorbit/internal/roles"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 // NativeSSOHint is shown when credentials are verified but not written.

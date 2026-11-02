@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/fsutil"
 )
 
 // Strategy selects how the next account is chosen.

@@ -11,8 +11,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/credorbit/credorbit/internal/engine"
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/engine"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // cliUI implements engine.Interaction with line prompts on stderr.

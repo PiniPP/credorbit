@@ -1,7 +1,7 @@
 # CredOrbit build helpers. Requires Go (see go.mod) and POSIX make.
 
 BINARY   := credorbit
-PKG      := github.com/credorbit/credorbit
+PKG      := github.com/PiniPP/credorbit
 MAIN     := ./cmd/credorbit
 DIST     := dist
 

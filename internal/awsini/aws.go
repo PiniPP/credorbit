@@ -3,7 +3,7 @@ package awsini
 import (
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // ProfileSectionName returns the config-file section name of a profile:

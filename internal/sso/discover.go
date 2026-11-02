@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // DefaultConcurrency is the number of parallel ListAccountRoles calls.

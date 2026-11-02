@@ -13,11 +13,11 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/credorbit/credorbit/internal/awsini"
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/inventory"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/roles"
+	"github.com/PiniPP/credorbit/internal/awsini"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/inventory"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/roles"
 )
 
 // ChangeKind is the type of a planned change.

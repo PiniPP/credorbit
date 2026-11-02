@@ -16,13 +16,13 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"github.com/credorbit/credorbit/internal/engine"
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/paths"
+	"github.com/PiniPP/credorbit/internal/engine"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/paths"
 )
 
-// Version is set at build time: -ldflags "-X github.com/credorbit/credorbit/internal/cli.Version=v1.0.0".
+// Version is set at build time: -ldflags "-X github.com/PiniPP/credorbit/internal/cli.Version=v1.0.0".
 var Version = "dev"
 
 // RunUI starts the TUI. It is set by main when the TUI is linked in.

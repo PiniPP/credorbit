@@ -8,8 +8,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // CurrentStateVersion is the state.json schema version written by this build.

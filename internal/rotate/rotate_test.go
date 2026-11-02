@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 func seeded() *rand.Rand { return rand.New(rand.NewPCG(1, 2)) }

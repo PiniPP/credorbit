@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 func TestDefaultRank(t *testing.T) {

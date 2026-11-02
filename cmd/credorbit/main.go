@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/credorbit/credorbit/internal/cli"
+	"github.com/PiniPP/credorbit/internal/cli"
 )
 
 func main() {

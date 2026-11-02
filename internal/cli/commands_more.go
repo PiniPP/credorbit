@@ -8,8 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/credorbit/credorbit/internal/engine"
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/engine"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // ---- groups ----

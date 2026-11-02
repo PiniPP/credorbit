@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // memClient is an in-memory Client.

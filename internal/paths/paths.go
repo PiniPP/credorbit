@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/credorbit/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/fsutil"
 )
 
 // Paths is the resolved set of locations. All fields are absolute.

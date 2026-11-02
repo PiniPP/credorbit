@@ -2,7 +2,7 @@
 # Docs: https://goreleaser.com/customization/
 #
 # Optional environment:
-#   CREDORBIT_REPO_OWNER / CREDORBIT_REPO_NAME  GitHub release target (default credorbit/credorbit)
+#   CREDORBIT_REPO_OWNER / CREDORBIT_REPO_NAME  GitHub release target (default PiniPP/credorbit)
 #   HOMEBREW_TAP_OWNER / HOMEBREW_TAP_NAME      Homebrew tap repo  (default <owner>/homebrew-tap)
 #   SCOOP_BUCKET_OWNER / SCOOP_BUCKET_NAME      Scoop bucket repo  (default <owner>/scoop-bucket)
 #   HOMEBREW_TAP_TOKEN                          token with write access to the tap and bucket;
@@ -32,9 +32,9 @@ builds:
       - -trimpath
     ldflags:
       - -s -w
-      - -X github.com/credorbit/credorbit/internal/version.Version=v{{ .Version }}
-      - -X github.com/credorbit/credorbit/internal/version.Commit={{ .ShortCommit }}
-      - -X github.com/credorbit/credorbit/internal/version.Date={{ .CommitDate }}
+      - -X github.com/PiniPP/credorbit/internal/version.Version=v{{ .Version }}
+      - -X github.com/PiniPP/credorbit/internal/version.Commit={{ .ShortCommit }}
+      - -X github.com/PiniPP/credorbit/internal/version.Date={{ .CommitDate }}
     mod_timestamp: "{{ .CommitTimestamp }}"
 
 archives:

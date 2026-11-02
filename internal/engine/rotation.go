@@ -8,11 +8,11 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/credorbit/credorbit/internal/awsini"
-	"github.com/credorbit/credorbit/internal/credexport"
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/rotate"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/awsini"
+	"github.com/PiniPP/credorbit/internal/credexport"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/rotate"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 func (e *Engine) Rotation() RotationInfo {

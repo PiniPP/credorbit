@@ -1,4 +1,4 @@
-module github.com/credorbit/credorbit
+module github.com/PiniPP/credorbit
 
 go 1.26.2
 

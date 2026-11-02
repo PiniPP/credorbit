@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 var exp = time.Date(2030, 1, 2, 3, 4, 5, 0, time.UTC)

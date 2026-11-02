@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/fsutil"
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/fsutil"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 // cacheTimeLayout is the timestamp format the AWS CLI v2 writes.

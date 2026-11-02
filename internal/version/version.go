@@ -2,9 +2,9 @@
 //
 // Release builds set the variables with -ldflags, e.g.
 //
-//	-X github.com/credorbit/credorbit/internal/version.Version=v1.2.3
-//	-X github.com/credorbit/credorbit/internal/version.Commit=abc1234
-//	-X github.com/credorbit/credorbit/internal/version.Date=2026-01-02T03:04:05Z
+//	-X github.com/PiniPP/credorbit/internal/version.Version=v1.2.3
+//	-X github.com/PiniPP/credorbit/internal/version.Commit=abc1234
+//	-X github.com/PiniPP/credorbit/internal/version.Date=2026-01-02T03:04:05Z
 //
 // Builds made with `go install module@version` carry no ldflags; for those
 // the module version and VCS stamps from runtime/debug.ReadBuildInfo are used.

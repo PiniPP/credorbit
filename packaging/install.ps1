@@ -12,7 +12,7 @@
   Tag to install, e.g. v1.2.3. Default: the latest release.
 
 .PARAMETER Repo
-  GitHub repository (owner/name). Default: $env:CREDORBIT_REPO or credorbit/credorbit.
+  GitHub repository (owner/name). Default: $env:CREDORBIT_REPO or PiniPP/credorbit.
 
 .PARAMETER InstallDir
   Target directory. Default: %LOCALAPPDATA%\Programs\CredOrbit.
@@ -26,7 +26,7 @@
 [CmdletBinding()]
 param(
     [string]$Version = $env:CREDORBIT_VERSION,
-    [string]$Repo = $(if ($env:CREDORBIT_REPO) { $env:CREDORBIT_REPO } else { 'credorbit/credorbit' }),
+    [string]$Repo = $(if ($env:CREDORBIT_REPO) { $env:CREDORBIT_REPO } else { 'PiniPP/credorbit' }),
     [string]$InstallDir = (Join-Path $env:LOCALAPPDATA 'Programs\CredOrbit'),
     [switch]$AddToPath
 )

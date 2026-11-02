@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/awsini"
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/awsini"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 func profileRole(t *testing.T, cfgText, profile string) string {

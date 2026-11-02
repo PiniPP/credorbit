@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 const testToken = "tok-SECRET-0123456789"

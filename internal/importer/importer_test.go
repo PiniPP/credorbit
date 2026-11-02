@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/credorbit/credorbit/internal/model"
-	"github.com/credorbit/credorbit/internal/state"
+	"github.com/PiniPP/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/state"
 )
 
 func loadFixture(t *testing.T) *Legacy {

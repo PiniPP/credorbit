@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/credorbit/credorbit/internal/model"
+	"github.com/PiniPP/credorbit/internal/model"
 )
 
 func acct(id, name string, roles ...string) model.DiscoveredAccount {
