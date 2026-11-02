@@ -28,3 +28,15 @@ brew install vhs            # also installs ttyd and ffmpeg
 make build && export PATH="$PWD:$PATH"
 cd assets/video && vhs credorbit-demo.tape   # writes credorbit-demo-raw.mp4
 ```
+
+## Rebuild the full videos
+
+`build/` holds the scripts that produced the published files (they use `/tmp/credorbit-video` as a work dir):
+
+| Script | Produces |
+|---|---|
+| `build.py` → `compose.py` | the silent captioned cut and GIF |
+| `build3.py` → `compose3.py` | the narrated walkthrough: per-sentence Amazon Polly (generative "Matthew") narration, chapter cards, sync, `.srt` |
+| `build2.py` → `compose2.py` | the same pipeline with macOS `say` (offline fallback) |
+
+Requirements: VHS, ffmpeg, Google Chrome, Python 3, and for `build3.py` AWS credentials allowed to call `polly:SynthesizeSpeech`.
