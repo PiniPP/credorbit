@@ -1,6 +1,10 @@
-# CredOrbit Architecture
+<h1><img src="../assets/brand/logo-symbol.svg" width="36" height="36" alt="" align="top"> Architecture</h1>
 
-> Your Cloud Access. In Orbit.
+Packages, contracts and data flow of CredOrbit, and the guarantees every file write follows.
+
+[← Back to README](../README.md) · [Docs index](README.md)
+
+---
 
 CredOrbit is a single static Go binary. It talks to AWS IAM Identity Center (SSO)
 directly through the AWS SDK for Go v2 — no AWS CLI, Bash, Python or curl needed.
@@ -23,6 +27,60 @@ equivalent and both behave identically.
    └────────┴────────┴─────────┴─────────┴──────────┴─────────┴──────────┘
    state (config.yaml + state.json, groups)   roles (ranking/policies)
    importer (legacy script, read-only)        fsutil · paths · redact · model
+   brand · version · update (release check)
+```
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#111C31','primaryTextColor':'#F8FAFC','primaryBorderColor':'#2563EB','lineColor':'#22D3EE','secondaryColor':'#0B1020','tertiaryColor':'#111C31'}}}%%
+flowchart LR
+    CLI["internal/cli"] --> ENG["internal/engine"]
+    TUI["internal/tui"] --> ENG
+    ENG --> SSO["sso"]
+    ENG --> NET["netx"]
+    ENG --> PS["profilesync"]
+    ENG --> CE["credexport"]
+    ENG --> ROT["rotate"]
+    ENG --> ST["state"]
+    PS --> INV["inventory"]
+    PS --> INI["awsini"]
+    CE --> INI
+    SSO --> CACHE["~/.aws/sso/cache"]
+    PS --> CFG["~/.aws/config"]
+    CE --> CRED["~/.aws/credentials"]
+    ROT --> ACCT["~/.claude-aws-account"]
+    ST --> YAML["config.yaml and state.json"]
+```
+
+### Login, discovery and export
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#111C31','primaryTextColor':'#F8FAFC','primaryBorderColor':'#2563EB','lineColor':'#22D3EE','secondaryColor':'#0B1020','tertiaryColor':'#111C31','signalTextColor':'#2563EB','signalColor':'#2563EB','loopTextColor':'#2563EB','actorTextColor':'#F8FAFC'}}}%%
+sequenceDiagram
+    participant U as User
+    participant E as engine
+    participant O as SSO OIDC
+    participant P as SSO portal
+    participant F as AWS files
+    U->>E: credorbit setup
+    E->>F: read token cache
+    alt token valid or refreshable
+        E->>O: CreateToken with refresh token
+    else sign-in needed
+        E->>O: RegisterClient, then authorize with PKCE or device code
+        O-->>U: browser or device code prompt
+        O-->>E: access and refresh token
+    end
+    E->>F: save token (0600, atomic)
+    E->>P: ListAccounts and ListAccountRoles
+    P-->>E: accounts and roles
+    E->>U: preview plan
+    U-->>E: approve
+    E->>F: backup, then sync ~/.aws/config
+    par per profile, bounded concurrency
+        E->>P: GetRoleCredentials
+    end
+    E->>F: write credentials file (locked, atomic, 0600)
+    E-->>U: report
 ```
 
 ## Design principles
@@ -49,26 +107,26 @@ equivalent and both behave identically.
 
 ## Packages and contracts
 
-All packages live under `internal/`. `model`, `fsutil`, `paths`, `redact` are the
-shared foundation and are already implemented.
+All packages live under `internal/`. `model`, `fsutil`, `paths` and `redact` are the
+shared foundation.
 
-### model — shared types (implemented)
+### model — shared types
 `SSOSession, Account, DiscoveredAccount, Discovery, Profile, AccountStatus,
 RolePolicy, Credentials, Token, Event/Reporter`, error classes
 `ErrNoAccess, ErrUnauthorized, ErrTransient, ErrNotFound, ErrCanceled`.
 
-### fsutil (implemented)
+### fsutil
 `AtomicWrite(path, data, perm)`, `WriteIfChanged`, `Backup(path, keep) (string, error)`,
 `ListBackups(path)`, `ReadFileOptional`, `ExpandHome`, `Restrict(path, perm)`,
 `CheckPrivate(path) (ok bool, detail string, err error)`,
 `AcquireLock(target, timeout) (*Lock, error)` / `(*Lock).Release()`, `ErrLocked`.
 
-### paths (implemented)
+### paths
 `Resolve() (Paths, error)` → `AWSConfig, AWSCredentials, SSOCacheDir, AppConfigDir,
 AppConfigFile, AppStateFile, AppLogFile, ClaudeAccountFile, LegacyScript`.
 Honors `AWS_CONFIG_FILE`, `AWS_SHARED_CREDENTIALS_FILE`, `CREDORBIT_CONFIG_DIR`, `XDG_CONFIG_HOME`.
 
-### redact (implemented)
+### redact
 `String(s) string`, `NewHandler(slog.Handler) *Handler`.
 
 ### netx — TLS, CA and proxy
@@ -220,7 +278,8 @@ type WriteOptions struct {
     Prune []string              // managed sections to delete (profiles removed)
     BackupKeep int
 }
-func Write(path string, r *Result, o WriteOptions) (written []string, backup string, err error)
+type WriteReport struct{ Written, Kept, Pruned []string; Backup string; Warnings []string }
+func Write(path string, r *Result, o WriteOptions) (*WriteReport, error)
 // lock; parse existing; replace ONLY succeeded sections; failed targets keep their old
 // section; unrelated sections untouched; refuse (error) if zero succeeded; atomic, 0600.
 func SectionName(profile, prefix string, stripPrefix bool) string
@@ -239,11 +298,11 @@ type Config struct {
     Profiles ProfilesConfig         // Prefix "p_", Region, Output
     Groups map[string]*Group        // "main" + user-defined
     Accounts map[string]AccountPref // accountID → {Profile, Role (preferred/manual)}
-    Roles RolesConfig               // Policy, Fallbacks, Ranking []roles.Rule, UpdateConfig bool
+    Roles RolesConfig               // Policy, Fallbacks, Ranking []RankRule{Match, Weight}, UpdateConfig bool
     Sync SyncConfig                 // AddNew bool, RemoveStale "never"|"prompt", Threshold 0.8
-    Export ExportConfig             // Enabled, CredentialsFile, StripPrefix, DefaultProfile, Concurrency, BackupKeep
+    Export ExportConfig             // Enabled, CredentialsFile, StripPrefix, DefaultProfile, Concurrency, BackupKeep, IncludeNewInMain
     Rotation RotationConfig         // Target "claude", File, Accounts []string, Strategy, VerifyBedrock, BedrockRegion, BedrockModel
-    Network NetworkConfig           // CABundle, ExtraCAs []string, ProbeURL, WriteCombinedBundle bool
+    Network NetworkConfig           // CABundle, ExtraCAs []string, ProbeURL, CombinedBundlePath string
     UI UIConfig                     // Theme "default"|"light"|"mono", ASCII bool
     Update UpdateConfig             // Repo "owner/name", Check bool
 }
@@ -257,6 +316,7 @@ func (c *Config) Validate() error
 func (c *Config) Group(name string) (*Group, error)
 func (c *Config) EnsureGroup(name, desc string) *Group
 func (c *Config) DeleteGroup(name string) error  // "main" cannot be deleted, only emptied
+func (c *Config) RenameGroup(oldName, newName string) error // "main" cannot be renamed
 func (g *Group) Add(m Member) bool; func (g *Group) Remove(key string) bool  // key = accountID or profile
 func (g *Group) Has(key string) bool
 type State struct {
@@ -273,11 +333,13 @@ func LoadState(path string) (*State, error); func (s *State) Save(path string) e
 ```go
 type Legacy struct {
     MainProfiles, ClaudeRotation, FallbackRoles []string
-    SSOSession, DefaultProfile, SASECA, ProbeURL, CredsFile, Prefix string
+    SSOSession, DefaultProfile, SASECA, ProbeURL, CredsFile, Prefix, RotationFile string
     Parallel int
+    Warnings []string
 }
 func ParseScript(data []byte) (*Legacy, error)   // reads bash arrays/defaults at runtime; nothing compiled in
 func (l *Legacy) Apply(c *state.Config, profiles []model.Profile) []string // returns notes; maps names→account IDs
+func CompatDefaults(c *state.Config, l *Legacy) // switch to Script-compatible behaviour
 ```
 
 ### rotate — Claude Code / Bedrock account rotation
@@ -288,20 +350,40 @@ func Next(current string, eligible []string, s Strategy, rnd *rand.Rand) (string
 func ReadCurrent(path string) (string, error); func WriteCurrent(path, account string) error
 func Eligible(accounts []string, credsPath string, now time.Time) (ok []string, skipped map[string]string)
 func VerifyBedrock(ctx context.Context, hc *http.Client, c model.Credentials, region, model string) error
-func ShellIntegration(shell string, file string) string // zsh|bash|fish|powershell
+func ShellIntegration(shell string, file string) (string, error) // zsh|bash|fish|powershell
 ```
 
 ### engine — workflows shared by CLI and TUI
-Owns configuration, AWS files and SSO clients; exposes intent-level methods
-(`Sessions`, `LoginStatus`, `Login`, `Discover`, `Inventory`, `PlanSync`,
-`ApplySync`, `Export`, `Rotate`, `Groups*`, `Status`, `Doctor`, `RunFull`) and
-emits `model.Event`s. User decisions are requested through an `Interaction`
-interface (`Confirm`, `SelectAccounts`, `SelectRole`, `ShowPlan`) implemented by
-the CLI (prompts / `--yes`) and by the TUI (dialogs).
+Owns configuration, AWS files and SSO clients and implements `engine.Service`,
+the single interface both front-ends use: sessions and login (`Sessions`,
+`LoginStatus`, `Login`, `Logout`, `AddSession`), discovery (`Discover`,
+`CachedDiscovery`, `Accounts`), `PlanSync` / `ApplySync`, `Export`, `RunFull`,
+groups (`Groups`, `Group`, `CreateGroup`, `GroupAdd`, `GroupSet`, …), rotation
+(`Rotation`, `Rotate`, `SetRotationAccounts`, `ShellIntegration`), `Status`,
+`Doctor`, settings (`Settings`, `SetSetting`, `SetMode`), `ImportLegacy` and
+`CheckUpdate`. Progress is emitted as `model.Event`s to a `Reporter`. User
+decisions go through an `Interaction` interface (`Confirm`, `ReviewPlan`,
+`SelectAccounts`, `SelectRole`, `LoginPrompt`) implemented by the CLI (line
+prompts; `--yes` approves plan reviews but never destructive changes, which need
+`--allow-remove`; non-TTY declines) and by the TUI (dialogs).
+
+`RunFull` runs these steps in order: `environment`, `session`, `network`,
+`login`, `discover`, `roles`, `compare`, `safeguards`, `main-group`, `scope`,
+`role-policy`, `preview`, `approve` (a dry run stops here), `backup`, `sync`,
+`credentials`, `export`, `role-updates`, `rotate`, `validate`, `report`.
+
+### brand, version, update
+`brand` holds the palette and the terminal mark (Unicode and ASCII) plus colour /
+Unicode detection (`NO_COLOR`, `CLICOLOR_FORCE`, `CREDORBIT_ASCII`, locale).
+`version` resolves the build version (link-time `-X` or Go build info). `update`
+queries the GitHub releases API for `update.repo`; it only reports, never installs.
 
 ### cli, tui
 Cobra commands map 1:1 to engine methods. `credorbit` with no args (on a TTY)
 and `credorbit ui` open the Bubble Tea UI; on a non-TTY `credorbit` prints help.
+The TUI also ships a fake in-memory `Service` (`internal/tui/demo`) used by
+`credorbit ui --demo`, tests and `tui.RenderStatic` (documentation screenshots).
+Exit codes: 0 ok, 1 error, 2 usage, 3 partial, 4 needs login, 130 cancelled.
 
 ## Files written
 
@@ -309,6 +391,8 @@ and `credorbit ui` open the Bubble Tea UI; on a non-TTY `credorbit` prints help.
 |------|--------|--------|
 | `~/.aws/config` | profilesync | lock, backup, validate, atomic, perms preserved/0600 |
 | `~/.aws/credentials` | credexport | lock, backup, never empty, unrelated preserved, 0600 |
-| `~/.aws/sso/cache/*.json` | sso | atomic, 0600, AWS CLI compatible |
+| `~/.aws/sso/cache/*.json` | sso | atomic, 0600, AWS CLI compatible (token; `credorbit-client-*.json` OIDC registration) |
 | `~/.claude-aws-account` | rotate | atomic, 0600 |
 | `<config dir>/config.yaml`, `state.json` | state | atomic, 0600, no secrets |
+| `<config dir>/credorbit.log` | engine | 0600, JSON, redacted, rotated at 5 MB |
+| `<file>.credorbit-<timestamp>.bak` | fsutil | 0600, newest `export.backup_keep` kept |

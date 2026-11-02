@@ -95,7 +95,7 @@ changelog:
 
 release:
   github:
-    owner: '{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}'
+    owner: '{{ envOrDefault "CREDORBIT_REPO_OWNER" "PiniPP" }}'
     name: '{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
   draft: true
   replace_existing_draft: true
@@ -109,11 +109,11 @@ brews:
   - name: credorbit
     ids: [default]
     repository:
-      owner: '{{ envOrDefault "HOMEBREW_TAP_OWNER" (envOrDefault "CREDORBIT_REPO_OWNER" "credorbit") }}'
+      owner: '{{ envOrDefault "HOMEBREW_TAP_OWNER" (envOrDefault "CREDORBIT_REPO_OWNER" "PiniPP") }}'
       name: '{{ envOrDefault "HOMEBREW_TAP_NAME" "homebrew-tap" }}'
       token: '{{ envOrDefault "HOMEBREW_TAP_TOKEN" "" }}'
     directory: Formula
-    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
+    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "PiniPP" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
     description: "AWS IAM Identity Center login, profile sync and temporary credentials"
     license: PolyForm-Noncommercial-1.0.0
     commit_author:
@@ -133,10 +133,10 @@ scoops:
   - name: credorbit
     ids: [default]
     repository:
-      owner: '{{ envOrDefault "SCOOP_BUCKET_OWNER" (envOrDefault "CREDORBIT_REPO_OWNER" "credorbit") }}'
+      owner: '{{ envOrDefault "SCOOP_BUCKET_OWNER" (envOrDefault "CREDORBIT_REPO_OWNER" "PiniPP") }}'
       name: '{{ envOrDefault "SCOOP_BUCKET_NAME" "scoop-bucket" }}'
       token: '{{ envOrDefault "HOMEBREW_TAP_TOKEN" "" }}'
-    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
+    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "PiniPP" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
     description: "AWS IAM Identity Center login, profile sync and temporary credentials"
     license: PolyForm-Noncommercial-1.0.0
     commit_author:
@@ -151,7 +151,7 @@ nfpms:
     package_name: credorbit
     file_name_template: "{{ .ConventionalFileName }}"
     vendor: CredOrbit contributors
-    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
+    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "PiniPP" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
     maintainer: CredOrbit contributors <release@users.noreply.github.com>
     description: |-
       CredOrbit manages AWS IAM Identity Center login, account discovery,

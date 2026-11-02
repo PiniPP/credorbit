@@ -23,7 +23,7 @@ Legend: ✅ parity · ⬆ parity + improvement · 🛠 legacy defect fixed
 | 10 | Add newly discovered accounts as `p_<name>` profiles | Python regex append | `profilesync` plan → preview → approve → apply; naming `prefix + name (space/_/+ → -)`, collision → `-<id>` | ✅ |
 | 11 | Stale profile detection | portal ∖ config | Same, per session, legacy inline-SSO profiles included | ✅ |
 | 12 | 80 % mass-removal safeguard | `len(portal) < 0.8 * len(have)` | Same threshold (configurable) **plus** block on incomplete/cached/failed discovery | ⬆ |
-| 13 | Remove stale profiles | automatic | Reviewed: preview + confirmation (`--yes` for automation); never on failed discovery | 🛠 |
+| 13 | Remove stale profiles | automatic | Reviewed: preview + separate confirmation (`--allow-remove` for automation; `--yes` never approves removals); never on failed discovery | 🛠 |
 | 14 | Role ranking | Python `rank()` | `roles.DefaultRanker()` reproduces it exactly; ranking rules configurable | ✅ |
 | 15 | `FALLBACK_ROLES` | env, default list | `roles.fallbacks` (imported), `--fallback-role` | ✅ |
 | 16 | Try assigned roles strongest-first, then configured, then fallbacks | per-profile loop | `script` role policy (compat mode) | ✅ |
@@ -55,7 +55,7 @@ Legend: ✅ parity · ⬆ parity + improvement · 🛠 legacy defect fixed
 | Script **edits its own source** to drop removed accounts | Self-modifying code; diffs and updates break; races with a running copy | Membership in `config.yaml`; script never touched |
 | `while [ "$next" == "$current" ]` rotation loop | **Infinite loop** when only one rotation account exists and it is current | `rotate.Next` returns the single eligible account; 0 eligible → clear error |
 | Full/main mode **rewrites the whole credentials file** with only the processed profiles | Main mode silently deletes every non-main section (and any hand-written static keys) | Selective update: only processed sections replaced; unrelated sections preserved byte-for-byte |
-| Single-profile mode prunes every section without a matching `p_` profile | Deletes unrelated user credential sections | Only sections CredOrbit wrote (tracked in `state.json`) are ever pruned, and only on request |
+| Single-profile mode prunes every section without a matching `p_` profile | Deletes unrelated user credential sections | Only sections CredOrbit wrote (tracked in `state.json`) are ever pruned, and only once their profile no longer exists |
 | Partial failure drops the failed profiles' sections | A transient error removes working (still valid) credentials | Failed targets keep their previous section |
 | Temp dir in `/tmp` then `mv` to `~/.aws` | Not atomic across filesystems; partial file possible | Temp file in the target directory + fsync + rename |
 | No locking | Two runs (e.g. two terminals) interleave writes | Advisory lock on config/credentials |
