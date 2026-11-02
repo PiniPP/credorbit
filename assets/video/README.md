@@ -2,7 +2,7 @@
 
 | File | Use |
 |---|---|
-| `credorbit-demo-narrated.mp4` | 1280×800 H.264 + AAC, 2:47 — narrated walkthrough with chapter cards |
+| `credorbit-demo-narrated.mp4` | 1280×800 H.264 + AAC, 2:41 — narrated walkthrough with chapter cards |
 | `credorbit-demo-narrated.srt` | Subtitles for the narrated walkthrough (upload alongside on YouTube / LinkedIn) |
 | `credorbit-demo.mp4` | 1280×800 H.264, 72 s — silent captioned cut |
 | `credorbit-demo.gif` | 960 px, 12 fps — inline in the README |
@@ -18,7 +18,7 @@ so no real account names, IDs or start URLs can appear.
 |---|---|
 | Terminal recording | [VHS](https://github.com/charmbracelet/vhs) (uses ttyd) with a CredOrbit-branded terminal theme |
 | Intro, outro and captions | Headless Chrome rendering HTML/CSS with the brand SVGs and palette |
-| Narration | macOS text-to-speech (`say`, voice Samantha), one clip per sentence so actions fire exactly on cue |
+| Narration | Amazon Polly generative voice "Matthew", one clip per sentence so actions fire exactly on cue |
 | Editing (chapters, fades, overlays, audio mix, encoding, GIF palette) | ffmpeg |
 
 ## Re-record the terminal part
