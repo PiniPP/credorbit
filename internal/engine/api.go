@@ -237,6 +237,10 @@ type CredentialStatus struct {
 // Service is everything the CLI and TUI need. *Engine implements it; the TUI also
 // has a fake implementation for tests and `credorbit ui --demo`.
 type Service interface {
+	// front-end wiring: decisions and live progress. Safe to call before any operation.
+	SetInteraction(Interaction)
+	SetReporter(model.Reporter)
+
 	// configuration & paths
 	ConfigPath() string
 	Mode() string
