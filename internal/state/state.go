@@ -29,6 +29,8 @@ type State struct {
 	LastRole        map[string]string           `json:"last_role"` // profile → role last used successfully
 	LastRun         time.Time                   `json:"last_run"`
 	Rotation        RotationState               `json:"rotation"`
+	// LegacyImported records when the legacy script was imported (doctor hint).
+	LegacyImported time.Time `json:"legacy_imported,omitzero"`
 }
 
 // RotationState records the current rotation target and recent changes.

@@ -92,6 +92,12 @@ type Authenticator struct {
 	// Now defaults to time.Now.
 	Now func() time.Time
 
+	// OIDCEndpoint overrides the SSO OIDC endpoint (tests, VPC/FIPS endpoints);
+	// "" uses the standard regional endpoint.
+	OIDCEndpoint string
+	// PortalEndpoint overrides the SSO portal endpoint used for logout; "" = default.
+	PortalEndpoint string
+
 	// Test/advanced hooks.
 	newOIDC        func(region string) oidcAPI                      // nil → SDK client
 	sleep          func(ctx context.Context, d time.Duration) error // nil → timer
@@ -118,6 +124,9 @@ func (a *Authenticator) oidc(region string) oidcAPI {
 	}
 	if a.HTTP != nil {
 		o.HTTPClient = a.HTTP
+	}
+	if a.OIDCEndpoint != "" {
+		o.BaseEndpoint = aws.String(strings.TrimRight(a.OIDCEndpoint, "/"))
 	}
 	return ssooidc.New(o)
 }
@@ -599,7 +608,11 @@ func (a *Authenticator) Logout(ctx context.Context, s model.SSOSession) error {
 		lctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel()
 		// Logout is a courtesy: short timeout and backoff, errors ignored.
-		p := newPortal(region, a.HTTP, a.portalEndpoint, time.Second)
+		ep := a.PortalEndpoint
+		if ep == "" {
+			ep = a.portalEndpoint
+		}
+		p := newPortal(region, a.HTTP, ep, time.Second)
 		_ = p.logout(lctx, tok.AccessToken)
 	}
 	return nil

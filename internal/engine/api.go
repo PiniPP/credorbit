@@ -80,6 +80,7 @@ type FullOptions struct {
 	AllowRemove bool // approve stale-profile removal non-interactively
 	EditMain    bool // offer the Main-group editor during setup
 	Parallel    int
+	Fallbacks   []string // nil = roles.fallbacks (env FALLBACK_ROLES)
 }
 
 // StepResult is one line of the final execution report.
@@ -118,6 +119,7 @@ type ExportOptions struct {
 	UpdateRoles *bool            // nil = config roles.update_config
 	DryRun      bool
 	Manual      map[string]string // accountID → role (manual policy / TUI role picker)
+	Fallbacks   []string          // nil = roles.fallbacks (env FALLBACK_ROLES); script policy only
 }
 
 // ExportLine is one profile's outcome (no secrets).
@@ -228,8 +230,8 @@ type Status struct {
 	Profiles    int                `json:"profiles"`
 	Groups      map[string]int     `json:"groups"`
 	Exported    []CredentialStatus `json:"exported"`
-	Rotation    *RotationInfo      `json:"rotation,omitempty"`
-	LastRun     time.Time          `json:"last_run,omitempty"`
+	Rotation    *RotationInfo      `json:"rotation,omitzero"`
+	LastRun     time.Time          `json:"last_run,omitzero"`
 }
 
 type SessionStatus struct {
@@ -237,15 +239,15 @@ type SessionStatus struct {
 	StartURL     string    `json:"start_url"`
 	Region       string    `json:"region"`
 	LoggedIn     bool      `json:"logged_in"`
-	ExpiresAt    time.Time `json:"expires_at,omitempty"`
+	ExpiresAt    time.Time `json:"expires_at,omitzero"`
 	Refresh      bool      `json:"refreshable"`
 	Accounts     int       `json:"accounts_discovered"`
-	DiscoveredAt time.Time `json:"discovered_at,omitempty"`
+	DiscoveredAt time.Time `json:"discovered_at,omitzero"`
 }
 
 type CredentialStatus struct {
 	Section string    `json:"section"`
-	Expires time.Time `json:"expires,omitempty"`
+	Expires time.Time `json:"expires,omitzero"`
 	Expired bool      `json:"expired"`
 	Managed bool      `json:"managed"`
 }

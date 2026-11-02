@@ -59,6 +59,15 @@ func NewClientWithEndpoint(region string, hc *http.Client, endpoint string) Clie
 	return newPortal(region, hc, endpoint, defaultMaxBackoff)
 }
 
+// NewClientWithBackoff is NewClientWithEndpoint with an explicit maximum retry
+// backoff (tests use a few milliseconds so retried 5xx responses stay fast).
+func NewClientWithBackoff(region string, hc *http.Client, endpoint string, maxBackoff time.Duration) Client {
+	if maxBackoff <= 0 {
+		maxBackoff = defaultMaxBackoff
+	}
+	return newPortal(region, hc, endpoint, maxBackoff)
+}
+
 type portal struct {
 	api *awssso.Client
 }

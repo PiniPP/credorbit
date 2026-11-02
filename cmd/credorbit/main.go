@@ -1,0 +1,19 @@
+// Command credorbit — Your Cloud Access. In Orbit.
+package main
+
+import (
+	"context"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/credorbit/credorbit/internal/cli"
+)
+
+func main() {
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	// tui wiring: cli.RunUI = tui.Run
+	code := cli.Execute(ctx, os.Args[1:], os.Stdout, os.Stderr)
+	stop()
+	os.Exit(code)
+}
