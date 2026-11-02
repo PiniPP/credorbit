@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title desc">
+  <title id="title">CredOrbit symbol, single colour</title>
+  <desc id="desc">Orbit Ring and Identity Core: a tilted orbital ring, open on the right like a letter C, circles a glowing cyan identity core. Three orbital nodes sit on the ring and a cyan motion arc sweeps into the leading node. Single-colour version; inherits the surrounding text colour.</desc>
+  <defs>
+    <mask id="node-knockout" maskUnits="userSpaceOnUse" x="-40" y="-40" width="336" height="336">
+      <rect x="-40" y="-40" width="336" height="336" fill="#FFFFFF"/>
+      <circle cx="207.7" cy="86.9" r="20" fill="#000000"/>
+      <circle cx="27.5" cy="144.6" r="17" fill="#000000"/>
+      <circle cx="207.7" cy="169.1" r="13" fill="#000000"/>
+    </mask>
+  </defs>
+  <g id="symbol" fill="currentColor" stroke="currentColor">
+    <g id="orbit" transform="translate(4 4.5) rotate(-24 128 128)">
+      <g id="orbit-paths" fill="none" stroke-linecap="round" mask="url(#node-knockout)">
+        <path id="orbit-ring" d="M 207.7 86.9 A 104 64 0 1 0 207.7 169.1" stroke-width="14"/>
+        <path id="motion-trail" d="M 107.2 51.2 A 120 78 0 0 1 196.8 64.1" stroke-width="4" stroke-opacity="0.55"/>
+      </g>
+      <circle id="node-lead" cx="207.7" cy="86.9" r="13" stroke="none"/>
+      <circle id="node-far" cx="27.5" cy="144.6" r="11" stroke="none"/>
+      <circle id="node-tail" cx="207.7" cy="169.1" r="8" stroke="none"/>
+    </g>
+    <g id="identity-core" transform="translate(4 4.5)">
+      <circle id="core-halo" cx="128" cy="128" r="34" fill="none" stroke-width="4"/>
+      <circle id="core" cx="128" cy="128" r="20" stroke="none"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,180 @@
+# GoReleaser configuration for CredOrbit.
+# Docs: https://goreleaser.com/customization/
+#
+# Optional environment:
+#   CREDORBIT_REPO_OWNER / CREDORBIT_REPO_NAME  GitHub release target (default credorbit/credorbit)
+#   HOMEBREW_TAP_OWNER / HOMEBREW_TAP_NAME      Homebrew tap repo  (default <owner>/homebrew-tap)
+#   SCOOP_BUCKET_OWNER / SCOOP_BUCKET_NAME      Scoop bucket repo  (default <owner>/scoop-bucket)
+#   HOMEBREW_TAP_TOKEN                          token with write access to the tap and bucket;
+#                                               when unset, formula/manifest upload is skipped.
+version: 2
+
+project_name: credorbit
+
+before:
+  hooks:
+    - go mod download
+    - sh -c 'rm -rf completions && mkdir -p completions'
+    - sh -c 'go run ./cmd/credorbit completion bash > completions/credorbit.bash'
+    - sh -c 'go run ./cmd/credorbit completion zsh > completions/credorbit.zsh'
+    - sh -c 'go run ./cmd/credorbit completion fish > completions/credorbit.fish'
+    - sh -c 'go run ./cmd/credorbit completion powershell > completions/credorbit.ps1'
+
+builds:
+  - id: credorbit
+    main: ./cmd/credorbit
+    binary: credorbit
+    env:
+      - CGO_ENABLED=0
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X github.com/credorbit/credorbit/internal/version.Version=v{{ .Version }}
+      - -X github.com/credorbit/credorbit/internal/version.Commit={{ .ShortCommit }}
+      - -X github.com/credorbit/credorbit/internal/version.Date={{ .CommitDate }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - id: default
+    ids: [credorbit]
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    wrap_in_directory: false
+    files:
+      - README.md
+      - LICENSE
+      - CHANGELOG.md
+      - docs/*
+      - completions/*
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+# Optional SBOMs (requires syft on the release runner):
+# sboms:
+#   - artifacts: archive
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  use: git
+  sort: asc
+  abbrev: 7
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\([[:word:]-]+\))??!?:.+$'
+      order: 0
+    - title: Bug fixes
+      regexp: '^.*?fix(\([[:word:]-]+\))??!?:.+$'
+      order: 1
+    - title: Performance
+      regexp: '^.*?perf(\([[:word:]-]+\))??!?:.+$'
+      order: 2
+    - title: Refactoring
+      regexp: '^.*?refactor(\([[:word:]-]+\))??!?:.+$'
+      order: 3
+    - title: Documentation
+      regexp: '^.*?docs(\([[:word:]-]+\))??!?:.+$'
+      order: 4
+    - title: Other changes
+      order: 999
+  filters:
+    exclude:
+      - '^.*?test(\([[:word:]-]+\))??!?:.+$'
+      - '^.*?style(\([[:word:]-]+\))??!?:.+$'
+      - '^.*?chore\(deps\):.+$'
+      - '^Merge (pull request|branch)'
+
+release:
+  github:
+    owner: '{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}'
+    name: '{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
+  draft: true
+  replace_existing_draft: true
+  prerelease: auto
+  name_template: "CredOrbit {{ .Tag }}"
+  footer: |
+    Verify downloads with `checksums.txt` (SHA-256). CredOrbit never updates itself;
+    `credorbit` only tells you when a newer release exists.
+
+brews:
+  - name: credorbit
+    ids: [default]
+    repository:
+      owner: '{{ envOrDefault "HOMEBREW_TAP_OWNER" (envOrDefault "CREDORBIT_REPO_OWNER" "credorbit") }}'
+      name: '{{ envOrDefault "HOMEBREW_TAP_NAME" "homebrew-tap" }}'
+      token: '{{ envOrDefault "HOMEBREW_TAP_TOKEN" "" }}'
+    directory: Formula
+    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
+    description: "AWS IAM Identity Center login, profile sync and temporary credentials"
+    license: MIT
+    commit_author:
+      name: credorbit-release
+      email: release@users.noreply.github.com
+    commit_msg_template: "chore: update credorbit formula to {{ .Tag }}"
+    skip_upload: '{{ if index .Env "HOMEBREW_TAP_TOKEN" }}auto{{ else }}true{{ end }}'
+    install: |
+      bin.install "credorbit"
+      bash_completion.install "completions/credorbit.bash" => "credorbit"
+      zsh_completion.install "completions/credorbit.zsh" => "_credorbit"
+      fish_completion.install "completions/credorbit.fish"
+    test: |
+      system "#{bin}/credorbit", "version"
+
+scoops:
+  - name: credorbit
+    ids: [default]
+    repository:
+      owner: '{{ envOrDefault "SCOOP_BUCKET_OWNER" (envOrDefault "CREDORBIT_REPO_OWNER" "credorbit") }}'
+      name: '{{ envOrDefault "SCOOP_BUCKET_NAME" "scoop-bucket" }}'
+      token: '{{ envOrDefault "HOMEBREW_TAP_TOKEN" "" }}'
+    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
+    description: "AWS IAM Identity Center login, profile sync and temporary credentials"
+    license: MIT
+    commit_author:
+      name: credorbit-release
+      email: release@users.noreply.github.com
+    commit_msg_template: "chore: update credorbit manifest to {{ .Tag }}"
+    skip_upload: '{{ if index .Env "HOMEBREW_TAP_TOKEN" }}auto{{ else }}true{{ end }}'
+
+nfpms:
+  - id: packages
+    ids: [credorbit]
+    package_name: credorbit
+    file_name_template: "{{ .ConventionalFileName }}"
+    vendor: CredOrbit contributors
+    homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
+    maintainer: CredOrbit contributors <release@users.noreply.github.com>
+    description: |-
+      CredOrbit manages AWS IAM Identity Center login, account discovery,
+      profile sync and temporary credentials from one static binary.
+    license: MIT
+    formats: [deb, rpm]
+    bindir: /usr/bin
+    section: utils
+    priority: optional
+    contents:
+      - src: completions/credorbit.bash
+        dst: /usr/share/bash-completion/completions/credorbit
+        file_info:
+          mode: 0644
+      - src: completions/credorbit.zsh
+        dst: /usr/share/zsh/site-functions/_credorbit
+        file_info:
+          mode: 0644
+      - src: completions/credorbit.fish
+        dst: /usr/share/fish/vendor_completions.d/credorbit.fish
+        file_info:
+          mode: 0644
+      - src: LICENSE
+        dst: /usr/share/doc/credorbit/copyright
+        file_info:
+          mode: 0644

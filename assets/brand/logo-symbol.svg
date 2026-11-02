@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title desc">
+  <title id="title">CredOrbit symbol</title>
+  <desc id="desc">Orbit Ring and Identity Core: a tilted orbital ring, open on the right like a letter C, circles a glowing cyan identity core. Three orbital nodes sit on the ring and a cyan motion arc sweeps into the leading node.</desc>
+  <defs>
+    <linearGradient id="ring-gradient" x1="24" y1="64" x2="232" y2="192" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="0.55" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="motion-gradient" x1="92.4" y1="67.9" x2="207.7" y2="86.9" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0"/>
+      <stop offset="0.6" stop-color="#22D3EE" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="trail-gradient" x1="107.2" y1="51.2" x2="196.8" y2="64.1" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0.75"/>
+    </linearGradient>
+    <radialGradient id="core-gradient" cx="123" cy="122" r="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A5F3FC"/>
+      <stop offset="0.5" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#0EA5C6"/>
+    </radialGradient>
+    <mask id="node-knockout" maskUnits="userSpaceOnUse" x="-40" y="-40" width="336" height="336">
+      <rect x="-40" y="-40" width="336" height="336" fill="#FFFFFF"/>
+      <circle cx="207.7" cy="86.9" r="19" fill="#000000"/>
+      <circle cx="27.5" cy="144.6" r="15" fill="#000000"/>
+      <circle cx="207.7" cy="169.1" r="13" fill="#000000"/>
+    </mask>
+    <radialGradient id="glow-gradient" cx="128" cy="128" r="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="symbol">
+    <g id="orbit" transform="translate(4 4.5) rotate(-24 128 128)">
+      <g id="orbit-paths" fill="none" stroke-linecap="round" mask="url(#node-knockout)">
+        <path id="orbit-ring" d="M 207.7 86.9 A 104 64 0 1 0 207.7 169.1" stroke="url(#ring-gradient)" stroke-width="14"/>
+        <path id="motion-arc" d="M 92.4 67.9 A 104 64 0 0 1 207.7 86.9" stroke="url(#motion-gradient)" stroke-width="14"/>
+        <path id="motion-trail" d="M 107.2 51.2 A 120 78 0 0 1 196.8 64.1" stroke="url(#trail-gradient)" stroke-width="4"/>
+      </g>
+      <circle id="node-lead" cx="207.7" cy="86.9" r="12" fill="#22D3EE"/>
+      <circle id="node-far" cx="27.5" cy="144.6" r="9" fill="#F8FAFC" stroke="#2563EB" stroke-width="3"/>
+      <circle id="node-tail" cx="207.7" cy="169.1" r="8" fill="#2563EB"/>
+    </g>
+    <g id="identity-core" transform="translate(4 4.5)">
+      <circle id="core-glow" cx="128" cy="128" r="52" fill="url(#glow-gradient)"/>
+      <circle id="core-halo" cx="128" cy="128" r="34" fill="none" stroke="#22D3EE" stroke-opacity="0.45" stroke-width="3"/>
+      <circle id="core" cx="128" cy="128" r="20" fill="url(#core-gradient)"/>
+    </g>
+  </g>
+</svg>

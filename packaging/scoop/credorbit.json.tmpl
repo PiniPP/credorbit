@@ -1,0 +1,33 @@
+{
+    "version": "${VERSION}",
+    "description": "AWS IAM Identity Center login, profile sync and temporary credentials. Your Cloud Access. In Orbit.",
+    "homepage": "https://github.com/${REPO}",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/${REPO}/releases/download/v${VERSION}/credorbit_${VERSION}_windows_amd64.zip",
+            "hash": "${SHA256_WINDOWS_AMD64}"
+        },
+        "arm64": {
+            "url": "https://github.com/${REPO}/releases/download/v${VERSION}/credorbit_${VERSION}_windows_arm64.zip",
+            "hash": "${SHA256_WINDOWS_ARM64}"
+        }
+    },
+    "bin": "credorbit.exe",
+    "checkver": {
+        "github": "https://github.com/${REPO}"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/${REPO}/releases/download/v$version/credorbit_$version_windows_amd64.zip"
+            },
+            "arm64": {
+                "url": "https://github.com/${REPO}/releases/download/v$version/credorbit_$version_windows_arm64.zip"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/checksums.txt"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+# Template: render with packaging/render-manifests.sh after a release is published.
+PackageIdentifier: CredOrbit.CredOrbit
+PackageVersion: ${VERSION}
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: credorbit.exe
+    PortableCommandAlias: credorbit
+Commands:
+  - credorbit
+ReleaseDate: ${RELEASE_DATE}
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/${REPO}/releases/download/v${VERSION}/credorbit_${VERSION}_windows_amd64.zip
+    InstallerSha256: ${SHA256_WINDOWS_AMD64}
+  - Architecture: arm64
+    InstallerUrl: https://github.com/${REPO}/releases/download/v${VERSION}/credorbit_${VERSION}_windows_arm64.zip
+    InstallerSha256: ${SHA256_WINDOWS_ARM64}
+ManifestType: installer
+ManifestVersion: 1.6.0

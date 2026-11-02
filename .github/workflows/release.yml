@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Test
+        run: go test -race ./...
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CREDORBIT_REPO_OWNER: ${{ github.repository_owner }}
+          CREDORBIT_REPO_NAME: ${{ github.event.repository.name }}
+          HOMEBREW_TAP_OWNER: ${{ vars.HOMEBREW_TAP_OWNER }}
+          HOMEBREW_TAP_NAME: ${{ vars.HOMEBREW_TAP_NAME }}
+          SCOOP_BUCKET_OWNER: ${{ vars.SCOOP_BUCKET_OWNER }}
+          SCOOP_BUCKET_NAME: ${{ vars.SCOOP_BUCKET_NAME }}
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}

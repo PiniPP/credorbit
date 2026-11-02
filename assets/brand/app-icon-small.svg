@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="title desc">
+  <title id="title">CredOrbit small icon</title>
+  <desc id="desc">Simplified Orbit Ring and Identity Core for 16 to 32 pixel sizes: a thick ring open on the right, one leading node and a solid cyan core.</desc>
+  <rect id="tile" width="32" height="32" rx="7" fill="#0B1020"/>
+  <g id="symbol" transform="translate(0.6 0.6) rotate(-24 16 16)">
+    <path id="orbit-ring" d="M 25.2 10.7 A 12 8.2 0 1 0 25.2 21.3" fill="none" stroke="#2563EB" stroke-width="3.2" stroke-linecap="round"/>
+    <circle id="node-lead" cx="25.2" cy="10.7" r="2.6" fill="#22D3EE"/>
+    <circle id="core" cx="16" cy="16" r="3.6" fill="#22D3EE"/>
+  </g>
+</svg>
