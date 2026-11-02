@@ -192,6 +192,22 @@ type RotateOptions struct {
 	DryRun   bool
 }
 
+// SettingInfo is one user-editable setting, addressed by a dotted key such as
+// "export.enabled" or "roles.policy". Values are strings; lists are comma-separated.
+type SettingInfo struct {
+	Key         string
+	Value       string
+	Description string
+	Choices     []string // non-empty for enumerations (incl. "true","false" for booleans)
+}
+
+// UIOptions are passed to the TUI entry point.
+type UIOptions struct {
+	Demo   bool   // use a fake in-memory service (no AWS, no file writes)
+	Screen string // initial screen: "" (menu) | "groups" | "main" | "accounts" | "rotate" | "setup"
+	Group  string // group to edit when Screen == "groups"
+}
+
 // Check is one doctor diagnostic.
 type Check struct {
 	Area   string // "aws-config", "sso", "network", "credentials", "permissions", "claude", "app"
@@ -247,6 +263,8 @@ type Service interface {
 	SetMode(mode string) error // "normal" | "compat"; persists
 	SaveConfig() error
 	Version() string
+	Settings() []SettingInfo            // user-editable settings (Settings screen, `config list`)
+	SetSetting(key, value string) error // validates, persists
 
 	// sessions & login
 	Sessions() ([]model.SSOSession, error)
