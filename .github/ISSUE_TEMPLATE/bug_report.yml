@@ -1,0 +1,31 @@
+name: 🐞 Bug report
+description: Something doesn't work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **Redact** account IDs, start URLs, profile names and never paste credentials or tokens.
+        `credorbit doctor` output is usually the fastest way to a fix.
+  - type: input
+    id: version
+    attributes: {label: CredOrbit version, description: "Output of `credorbit version`", placeholder: "credorbit v1.0.0 (darwin/arm64, go1.26.10)"}
+    validations: {required: true}
+  - type: dropdown
+    id: os
+    attributes: {label: Operating system, options: [macOS, Linux, Windows]}
+    validations: {required: true}
+  - type: dropdown
+    id: mode
+    attributes: {label: Mode, options: [Normal, Script-compatible, Not sure]}
+  - type: textarea
+    id: what
+    attributes: {label: What happened?, description: Expected vs actual behaviour.}
+    validations: {required: true}
+  - type: textarea
+    id: steps
+    attributes: {label: Steps to reproduce, placeholder: "1. credorbit setup --full\n2. ..."}
+    validations: {required: true}
+  - type: textarea
+    id: doctor
+    attributes: {label: "`credorbit doctor` output (redacted)", render: text}

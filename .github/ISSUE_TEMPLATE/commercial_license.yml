@@ -1,0 +1,26 @@
+name: 💼 Commercial license request
+description: Companies and enterprises need a paid commercial license to use CredOrbit.
+title: "Commercial license request: <organisation>"
+labels: [commercial-license]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        CredOrbit is free for personal, educational, research and non-profit use.
+        **Any use by or on behalf of a company requires a commercial license** — see [COMMERCIAL.md](https://github.com/PiniPP/credorbit/blob/main/COMMERCIAL.md).
+        Only share what you are comfortable making public; detailed terms are agreed privately.
+  - type: input
+    id: org
+    attributes: {label: Organisation}
+    validations: {required: true}
+  - type: dropdown
+    id: users
+    attributes: {label: Approximate number of users, options: ["1–10", "11–50", "51–250", "251–1000", "1000+"]}
+    validations: {required: true}
+  - type: dropdown
+    id: use
+    attributes: {label: Intended use, multiple: true, options: [Developer workstations, CI/CD pipelines, Bundled in a product or service, Evaluation]}
+  - type: input
+    id: contact
+    attributes: {label: Preferred contact method, description: "How should we reach you privately? (e.g. a business email)"}
+    validations: {required: true}
