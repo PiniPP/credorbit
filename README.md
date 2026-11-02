@@ -32,7 +32,8 @@ CredOrbit is a single static binary that keeps your AWS IAM Identity Center acce
     <img src="assets/video/credorbit-demo.gif" alt="CredOrbit demo: browse accounts, manage Main Accounts, Full Setup &amp; Sync, Claude rotation and diagnostics" width="860">
   </a>
   <br><sub>72-second tour — browse &amp; search accounts · Main Accounts · Full Setup &amp; Sync with reviewed changes · live export · Claude/Bedrock rotation · diagnostics.
-  <br><a href="assets/video/credorbit-demo.mp4"><b>Watch in HD (MP4)</b></a> · recorded with <code>credorbit ui --demo</code> (synthetic data)</sub>
+  <br>🔊 <a href="assets/video/credorbit-demo-narrated.mp4"><b>Watch the narrated walkthrough (2:47, with voice-over)</b></a> · <a href="assets/video/credorbit-demo-narrated.srt">subtitles</a> · <a href="assets/video/credorbit-demo.mp4">silent HD cut (72 s)</a>
+  <br>Recorded with <code>credorbit ui --demo</code> — synthetic data, no AWS calls.</sub>
 </div>
 
 ## ✨ Features
