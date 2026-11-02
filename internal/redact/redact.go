@@ -13,7 +13,7 @@ var patterns = []*regexp.Regexp{
 	// AWS access key IDs (AKIA = long-term, ASIA = temporary)
 	regexp.MustCompile(`\b(AKIA|ASIA)[A-Z0-9]{12,}\b`),
 	// key = value / "key": "value" for secret-ish keys
-	regexp.MustCompile(`(?i)("?(?:aws_secret_access_key|aws_session_token|secret_?access_?key|session_?token|access_?token|refresh_?token|client_?secret|accessToken|refreshToken|clientSecret|password|authorization)"?\s*[:=]\s*"?)([^"\s,}]+)`),
+	regexp.MustCompile(`(?i)("?(?:aws_secret_access_key|aws_session_token|secret_?access_?key|session_?token|access_?token|refresh_?token|client_?secret|accessToken|refreshToken|clientSecret|password|authorization)"?\s*[:=]\s*"?)((?i:bearer\s+|basic\s+)?[^"\s,}]+)`),
 	// Bearer tokens
 	regexp.MustCompile(`(?i)(bearer\s+)([A-Za-z0-9\-._~+/]+=*)`),
 	// Long base64-ish blobs (session tokens are hundreds of chars)
