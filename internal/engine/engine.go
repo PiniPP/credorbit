@@ -171,8 +171,31 @@ func newFileLogger(path string, verbose bool) *slog.Logger {
 	if err != nil {
 		return slog.New(redact.NewHandler(slog.NewJSONHandler(discardWriter{}, nil)))
 	}
+	_ = f.Close()
 	_ = fsutil.Restrict(path, 0o600)
-	return slog.New(redact.NewHandler(slog.NewJSONHandler(f, &slog.HandlerOptions{Level: level})))
+	return slog.New(redact.NewHandler(slog.NewJSONHandler(&appendWriter{path: path}, &slog.HandlerOptions{Level: level})))
+}
+
+// appendWriter opens, appends and closes the log file on every record. Log volume
+// is low, and holding no handle means the file can always be rotated or deleted
+// (Windows refuses to delete open files) and nothing leaks when an Engine is dropped.
+type appendWriter struct {
+	mu   sync.Mutex
+	path string
+}
+
+func (w *appendWriter) Write(p []byte) (int, error) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	f, err := os.OpenFile(w.path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o600)
+	if err != nil {
+		return 0, err
+	}
+	n, werr := f.Write(p)
+	if cerr := f.Close(); werr == nil {
+		werr = cerr
+	}
+	return n, werr
 }
 
 type discardWriter struct{}

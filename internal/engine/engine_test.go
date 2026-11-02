@@ -6,6 +6,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"runtime"
 	"slices"
 	"strings"
 	"testing"
@@ -426,7 +427,7 @@ func TestExportScopes(t *testing.T) {
 		if managed != res.Succeeded {
 			t.Errorf("managed = %d, succeeded = %d", managed, res.Succeeded)
 		}
-		if fi, _ := os.Stat(te.paths.AWSCredentials); fi.Mode().Perm() != 0o600 {
+		if fi, _ := os.Stat(te.paths.AWSCredentials); runtime.GOOS != "windows" && fi.Mode().Perm() != 0o600 {
 			t.Errorf("perm = %v", fi.Mode().Perm())
 		}
 	})
@@ -909,7 +910,7 @@ func TestDoctorBrokenSetup(t *testing.T) {
 	if c := find("app", "legacy script"); c.Status != "info" {
 		t.Errorf("legacy = %+v", c)
 	}
-	if c := find("permissions", "credentials file"); c.Status != "fail" && os.Getenv("GOOS") != "windows" {
+	if c := find("permissions", "credentials file"); c.Status != "fail" && runtime.GOOS != "windows" {
 		t.Errorf("perm check = %+v", c)
 	}
 	for _, c := range checks {
