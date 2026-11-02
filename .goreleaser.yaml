@@ -115,7 +115,7 @@ brews:
     directory: Formula
     homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
     description: "AWS IAM Identity Center login, profile sync and temporary credentials"
-    license: MIT
+    license: PolyForm-Noncommercial-1.0.0
     commit_author:
       name: credorbit-release
       email: release@users.noreply.github.com
@@ -138,7 +138,7 @@ scoops:
       token: '{{ envOrDefault "HOMEBREW_TAP_TOKEN" "" }}'
     homepage: 'https://github.com/{{ envOrDefault "CREDORBIT_REPO_OWNER" "credorbit" }}/{{ envOrDefault "CREDORBIT_REPO_NAME" "credorbit" }}'
     description: "AWS IAM Identity Center login, profile sync and temporary credentials"
-    license: MIT
+    license: PolyForm-Noncommercial-1.0.0
     commit_author:
       name: credorbit-release
       email: release@users.noreply.github.com
@@ -156,7 +156,7 @@ nfpms:
     description: |-
       CredOrbit manages AWS IAM Identity Center login, account discovery,
       profile sync and temporary credentials from one static binary.
-    license: MIT
+    license: PolyForm-Noncommercial-1.0.0
     formats: [deb, rpm]
     bindir: /usr/bin
     section: utils
