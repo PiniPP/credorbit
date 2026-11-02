@@ -167,7 +167,7 @@ func Default() *Config {
 		},
 		Rotation: RotationConfig{Target: "claude", Strategy: StrategyRandom},
 		UI:       UIConfig{Theme: "default"},
-		Update:   UpdateConfig{Check: true},
+		Update:   UpdateConfig{Repo: DefaultUpdateRepo, Check: true},
 	}
 	c.normalize()
 	return c
@@ -453,3 +453,7 @@ func mapValue(n *yaml.Node, key string) *yaml.Node {
 	}
 	return nil
 }
+
+// DefaultUpdateRepo is the GitHub repository checked by `credorbit update --check`.
+// Override with `credorbit config set update.repo owner/name` (forks, mirrors).
+const DefaultUpdateRepo = "PiniPP/credorbit"

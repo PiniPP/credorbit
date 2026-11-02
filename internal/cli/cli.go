@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,10 +21,22 @@ import (
 	"github.com/PiniPP/credorbit/internal/fsutil"
 	"github.com/PiniPP/credorbit/internal/model"
 	"github.com/PiniPP/credorbit/internal/paths"
+	"github.com/PiniPP/credorbit/internal/update"
+	"github.com/PiniPP/credorbit/internal/version"
 )
 
-// Version is set at build time: -ldflags "-X github.com/PiniPP/credorbit/internal/cli.Version=v1.0.0".
-var Version = "dev"
+// Version is the build version; set at link time through internal/version
+// (-X github.com/PiniPP/credorbit/internal/version.Version=v1.2.3).
+var Version = version.Short()
+
+// checkUpdate adapts internal/update to the engine's update hook (check only, never installs).
+func checkUpdate(ctx context.Context, hc *http.Client, repo, current string) (string, string, bool, error) {
+	rel, newer, err := update.Check(ctx, hc, repo, current)
+	if err != nil {
+		return "", "", false, err
+	}
+	return rel.Version, rel.URL, newer, nil
+}
 
 // RunUI starts the TUI. It is set by main when the TUI is linked in.
 var RunUI func(ctx context.Context, svc engine.Service, o engine.UIOptions) error
@@ -161,6 +174,7 @@ func (a *app) service() (engine.Service, error) {
 		Compat:      a.compat,
 		NoExtraCA:   a.noExtraCA,
 		OpenBrowser: openBrowser,
+		UpdateCheck: checkUpdate,
 	}
 	if engineHook != nil {
 		engineHook(&o)
